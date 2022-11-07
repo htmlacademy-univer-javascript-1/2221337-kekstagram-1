@@ -1,10 +1,10 @@
 import { uploadHashtagInput, clearHashtagsField } from './hashtags.js';
+import { isEscapePushed } from './utils.js';
 
 const uploadingControl = document.querySelector('#upload-file');
 const uploadingOverlay = document.querySelector('.img-upload__overlay');
 const uploadingClose = document.querySelector('#upload-cancel');
 
-const uploadingHashtags = uploadingOverlay.querySelector('.text__hashtags');
 const uploadingComments = uploadingOverlay.querySelector('.text__description');
 const uploadingButton = uploadingOverlay.querySelector('#upload-submit');
 
@@ -19,22 +19,22 @@ const clearForm = () => {
   uploadingButton.disabled = false;
 };
 
-const onEscapeUpload = (evt) => {
-  if(evt.key === 'Escape' && document.activeElement !== uploadingHashtags && document.activeElement !== uploadingComments) {
+const onEscapeKeyDown = (evt) => {
+  if(isEscapePushed(evt) && !evt.target.classList.contains('text__hashtags') && !evt.target.classList.contains('text__description')) {
     clearForm();
 
-    document.removeEventListener('keydown', onEscapeUpload);
+    document.removeEventListener('keydown', onEscapeKeyDown);
   }
 };
 
 uploadingClose.addEventListener('click', () => {
   clearForm();
 
-  document.removeEventListener('keydown', onEscapeUpload);
+  document.removeEventListener('keydown', onEscapeKeyDown);
 });
 
 const onUploadClick = () => {
-  document.addEventListener('keydown', onEscapeUpload);
+  document.addEventListener('keydown', onEscapeKeyDown);
 
   uploadingOverlay.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');

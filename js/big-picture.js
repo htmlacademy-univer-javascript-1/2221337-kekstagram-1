@@ -1,3 +1,5 @@
+import { isEscapePushed } from './utils.js';
+
 const bigPicture = document.querySelector('.big-picture');
 const pictureComments = bigPicture.querySelector('.social__comments');
 const commentChild = pictureComments.children[0];
@@ -16,9 +18,10 @@ const getCommentItem = (comment) => {
 };
 
 const onEscapeKeyDown = (evt) => {
-  if(evt.key === 'Escape'){
+  if(isEscapePushed(evt)){
     bigPicture.classList.add('hidden');
     document.querySelector('body').classList.remove('modal-open');
+
     document.removeEventListener('keydown', onEscapeKeyDown);
   }
 };
