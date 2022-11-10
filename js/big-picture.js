@@ -1,34 +1,24 @@
 import { isEscapePushed } from './utils.js';
+import { setComments } from './comments.js';
 
 const bigPicture = document.querySelector('.big-picture');
-const pictureComments = bigPicture.querySelector('.social__comments');
-const commentChild = pictureComments.children[0];
 const closeButton = bigPicture.querySelector('#picture-cancel');
 
-const getCommentItem = (comment) => {
-  const newComment = commentChild.cloneNode(true);
-  const newCommentImg = newComment.querySelector('.social__picture');
-
-  newCommentImg.src = comment.avatar;
-  newCommentImg.alt = comment.name;
-
-  newComment.querySelector('.social__text').textContent = comment.message;
-
-  return newComment;
+const clearBigPictureMenu = () => {
+  bigPicture.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
 };
 
 const onEscapeKeyDown = (evt) => {
   if(isEscapePushed(evt)){
-    bigPicture.classList.add('hidden');
-    document.querySelector('body').classList.remove('modal-open');
+    clearBigPictureMenu();
 
     document.removeEventListener('keydown', onEscapeKeyDown);
   }
 };
 
 closeButton.addEventListener('click', () => {
-  bigPicture.classList.add('hidden');
-  document.querySelector('body').classList.remove('modal-open');
+  clearBigPictureMenu();
 
   document.removeEventListener('keydown', onEscapeKeyDown);
 });
@@ -41,16 +31,10 @@ const addPictureEvent = (picture, data) => {
 
     bigPicture.querySelector('.big-picture__img').querySelector('img').src = data.url;
     bigPicture.querySelector('.likes-count').textContent = data.likes;
-    bigPicture.querySelector('.comments-count').textContent = data.comments.length;
     bigPicture.querySelector('.social__caption').textContent = data.description;
 
-    pictureComments.innerHTML = '';
-    data.comments.forEach((comment) => {
-      pictureComments.appendChild(getCommentItem(comment));
-    });
+    setComments(data.comments);
 
-    bigPicture.querySelector('.social__comment-count').classList.add('hidden');
-    bigPicture.querySelector('.comments-loader').classList.add('hidden');
     document.querySelector('body').classList.add('modal-open');
   });
 };
