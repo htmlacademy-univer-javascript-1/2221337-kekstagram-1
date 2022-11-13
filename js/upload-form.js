@@ -1,5 +1,7 @@
 import { uploadHashtagInput, clearHashtagsField } from './hashtags.js';
 import { isEscapePushed } from './utils.js';
+import { setScale } from './scaler.js';
+import { setEffects } from './effects.js';
 
 const uploadingControl = document.querySelector('#upload-file');
 const uploadingOverlay = document.querySelector('.img-upload__overlay');
@@ -38,6 +40,9 @@ const onUploadClick = () => {
 
   uploadingOverlay.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
+
+  setScale();
+  setEffects();
 
   uploadHashtagInput();
 };
