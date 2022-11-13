@@ -4,7 +4,7 @@ const MAX_AVATARS_NUMBER = 6;
 const MAX_ITEMS_NUMBER = 25;
 const MIN_LIKES = 15;
 const MAX_LIKES = 200;
-const MAX_COMMENTS_NUMBER = 3;
+const MAX_COMMENTS_NUMBER = 25;
 
 const MESSAGES = [
   'Всё отлично!',
