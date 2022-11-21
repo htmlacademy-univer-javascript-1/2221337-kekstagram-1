@@ -1,11 +1,15 @@
-import { uploadHashtagInput, clearHashtagsField } from './hashtags.js';
+import { uploadHashtagInput, clearHashtagsField, checkFormValidation } from './hashtags.js';
 import { isEscapePushed } from './utils.js';
 import { setScale } from './scaler.js';
 import { setEffects } from './effects.js';
+import { setData } from './fetch.js';
+import { addPostMessages, showSuccessMessage, closeMessage, showErrorMessage } from './post-messages.js';
 
-const uploadingControl = document.querySelector('#upload-file');
-const uploadingOverlay = document.querySelector('.img-upload__overlay');
-const uploadingClose = document.querySelector('#upload-cancel');
+const form = document.querySelector('.img-upload__form');
+
+const uploadingControl = form.querySelector('#upload-file');
+const uploadingOverlay = form.querySelector('.img-upload__overlay');
+const uploadingClose = form.querySelector('#upload-cancel');
 
 const uploadingComments = uploadingOverlay.querySelector('.text__description');
 const uploadingButton = uploadingOverlay.querySelector('#upload-submit');
@@ -18,6 +22,8 @@ const clearForm = () => {
   clearHashtagsField();
   uploadingComments.value = '';
 
+  closeMessage();
+
   uploadingButton.disabled = false;
 };
 
@@ -29,11 +35,13 @@ const onEscapeKeyDown = (evt) => {
   }
 };
 
-uploadingClose.addEventListener('click', () => {
+const closeForm = () => {
   clearForm();
 
   document.removeEventListener('keydown', onEscapeKeyDown);
-});
+};
+
+uploadingClose.addEventListener('click', closeForm);
 
 const onUploadClick = () => {
   document.addEventListener('keydown', onEscapeKeyDown);
@@ -49,6 +57,17 @@ const onUploadClick = () => {
 
 const uploadForm = () => {
   uploadingControl.addEventListener('change', onUploadClick);
+  addPostMessages();
 };
 
-export{uploadForm};
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+
+  if(checkFormValidation()) {
+    setData(showSuccessMessage, showErrorMessage, 'POST', new FormData(form));
+  }
+};
+
+form.addEventListener('submit', onFormSubmit);
+
+export{uploadForm, closeForm, onEscapeKeyDown};
