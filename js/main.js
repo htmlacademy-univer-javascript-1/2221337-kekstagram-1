@@ -1,6 +1,6 @@
-import {uploadForm} from './upload-form.js';
+import {uploadForm} from './uploading-form.js';
 import {setData} from './fetch.js';
-import {onRecieveSuccess, showUnloadingErrorMessage} from './upload-data.js';
+import {onRecieveSuccess, showUnloadingErrorMessage} from './uploading-data.js';
 
 setData(onRecieveSuccess,
   () => {

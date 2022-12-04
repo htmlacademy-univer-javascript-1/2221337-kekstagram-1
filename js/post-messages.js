@@ -1,4 +1,4 @@
-import { closeForm, onEscapeKeyDown } from './upload-form.js';
+import { closeForm, onEscapeKeyDown } from './uploading-form.js';
 import { isEscapePushed } from './utils.js';
 
 const MESSAGE_Z_POSITION = 100;
