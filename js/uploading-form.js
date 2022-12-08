@@ -1,15 +1,12 @@
-import { uploadHashtagInput, clearHashtagsField, checkFormValidation } from './hashtags.js';
+import { uploadHashtagInput, clearHashtagsField, checkFormValidation, form } from './hashtags.js';
 import { isEscapePushed } from './utils.js';
-import { setScale } from './scaler.js';
+import { setScale, uploadingOverlay } from './scaling.js';
 import { setEffects } from './effects.js';
 import { setData } from './fetch.js';
 import { addPostMessages, showSuccessMessage, closeMessage, showErrorMessage } from './post-messages.js';
 import { uploadUserPicture} from './user-picture.js';
 
-const form = document.querySelector('.img-upload__form');
-
 const uploadingControl = form.querySelector('#upload-file');
-const uploadingOverlay = form.querySelector('.img-upload__overlay');
 const uploadingClose = form.querySelector('#upload-cancel');
 
 const uploadingComments = uploadingOverlay.querySelector('.text__description');
